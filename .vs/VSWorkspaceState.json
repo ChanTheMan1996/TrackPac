@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\assets",
+    "\\src\\pages",
+    "\\src\\pages\\home",
+    "\\src\\providers",
+    "\\src\\providers\\location-tracker"
+  ],
+  "SelectedNode": "\\src\\providers\\location-tracker\\location-tracker.ts",
+  "PreviewInSolutionExplorer": false
+}
