@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
-import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import { Geolocation } from '@ionic-native/geolocation';
 import { HTTP } from '@ionic-native/http';
 import 'rxjs/add/operator/filter';
  
@@ -8,8 +8,8 @@ import 'rxjs/add/operator/filter';
 export class LocationTracker {
  
   public watch: any;   
-  public lat: number = 0;
-  public lng: number = 0;
+  public lat: any;
+  public lng: any;
  
   constructor(public zone: NgZone, public backgroundGeolocation: BackgroundGeolocation, public geolocation: Geolocation, public http: HTTP) {
   }
@@ -19,11 +19,12 @@ export class LocationTracker {
  
     let config = {
       desiredAccuracy: 0,
-      stationaryRadius: 5,
-      distanceFilter: 300,
+      stationaryRadius: 50,
+      distanceFilter: 8047,
       debug: true,
       notificationTitle: "Jet airways",
-      notificationText: "We know where you are"
+      notificationText: "We know where you are",
+      notificationIconColor: "#1368f2"
     };
  
     this.backgroundGeolocation.configure(config).subscribe((location) => {
@@ -35,11 +36,9 @@ export class LocationTracker {
       this.zone.run(() => {
         this.lat = location.latitude;
         this.lng = location.longitude;
+        var link = 'https://www.jet-airways-stl.com/gt5ws.nsf/ws_shipmentLocationUpdate?openagent&dispatchTicketNumber='+ ticket +'&latitude='+ this.lat +'&longitude=' + this.lng;
+        this.http.get(link, {}, {});
       });
-      
-
-      var link = 'https://www.jet-airways-stl.com/gt5ws.nsf/ws_shipmentLocationUpdate?openagent&dispatchTicketNumber='+ ticket +'&latitude='+ this.lat +'&longitude=' + this.lng;
-      this.http.get(link, {}, {});
  
     }, (err) => {
  
@@ -49,31 +48,14 @@ export class LocationTracker {
  
     // Turn ON the background-geolocation system.
     this.backgroundGeolocation.start();
- 
- 
-    // Foreground Tracking
- 
-    let options = {
-      frequency: 3000,
-      enableHighAccuracy: true
-    };
- 
-    this.watch = this.geolocation.watchPosition(options).filter((p: any) => p.code === undefined).subscribe((position: Geoposition) => {
-    console.log(position);
- 
-      // Run update inside of Angular's zone
-      this.zone.run(() => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-      });
-      var link = 'https://www.jet-airways-stl.com/gt5ws.nsf/ws_shipmentLocationUpdate?openagent&dispatchTicketNumber='+ ticket +'&latitude='+ this.lat +'&longitude=' + this.lng;
-      this.http.get(link, {}, {}); 
-    });
    }
  
-  stopTracking() {
+  stopTracking(ticket) {
     console.log('stopTracking');
- 
+
+    var link = 'https://www.jet-airways-stl.com/gt5ws.nsf/ws_shipmentLocationUpdate?openagent&dispatchTicketNumber='+ ticket +'&latitude='+ this.lat +'&longitude=' + this.lng;
+    this.http.get(link, {}, {}); 
+
     this.backgroundGeolocation.finish();
     this.watch.unsubscribe();
   }

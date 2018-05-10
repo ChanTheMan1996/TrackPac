@@ -1,18 +1,36 @@
+<div id="custom-overlay" [style.display]="splash ? 'flex': 'none'">
+  <div class="flb">
+    
+    <div class="Aligner-item Aligner-item--top"></div>
+    <img src="assets/imgs/logo.gif">
+    <div class="Aligner-item Aligner-item--bottom"></div>
+  </div>
+</div>
+
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar toolbar toolbar-ios toolbar-ios-primary color="primary">
     <ion-title text-center>
-      Location Tracker
+      TrackPac
     </ion-title>
+    <ion-buttons end class="bar-buttons bar-buttons-ios">
+      <button ion-button icon-only class="disable-hover bar-button bar-button-ios bar-button-default bar-button-default-ios" (click)="presentPopover($event)">
+        <ion-icon name="ios-information-circle-outline"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
  
 <ion-content>
-  <ion-item>
+  <ion-item style="padding-left: 0px;">
     <ion-label color="primary" floating>Ticket Number</ion-label>
     <ion-input [(ngModel)]="ticketVal" required></ion-input>
   </ion-item>
-  <h3>Current Latitude: {{locationTracker.lat}}</h3>
-  <h3>Current Longitude: {{locationTracker.lng}}</h3>
+  <h5>Current Latitude: {{locationTracker.lat}}</h5>
+  <h5>Current Longitude: {{locationTracker.lng}}</h5>
   <button ion-button full primary (click)="start()">Start Tracking</button>
   <button ion-button full primary (click)="stop()">Stop Tracking</button>
+
+  <div text-center id="trackGif">
+        <img src="assets/imgs/logo.gif">
+  </div>
 </ion-content>

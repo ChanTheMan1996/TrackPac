@@ -10,12 +10,14 @@ import { LocationTracker } from '../providers/location-tracker/location-tracker'
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HTTP } from '@ionic-native/http';
+import { PopoverComponent } from '../components/popover/popover'
 
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    PopoverComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import { HTTP } from '@ionic-native/http';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    PopoverComponent
   ],
   providers: [
     StatusBar,
