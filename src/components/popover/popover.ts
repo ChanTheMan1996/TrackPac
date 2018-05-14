@@ -19,15 +19,18 @@ export class PopoverComponent {
   item3: string;
   item4: string;
   item5: string;
+  link: string;
 
 
   constructor() {
-    this.text = 'About';
+    this.text = 'Info';
     this.item1 = "Enter your ticket number";
     this.item2 = "Hit start tracking";
     this.item3 = "Allow all loaction permissions";
     this.item4 = "Just leave the app running";
     this.item5 = "App works in background";
+
+    this.link = "Tech Support";
   }
 
 }
